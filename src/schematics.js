@@ -44,9 +44,12 @@ class Schematics {
           const key = Object.freeze({ name, x, y, size });
           const data = Object.freeze({ genId, key });
 
+          console.log(data.genId);
+          console.log(data.genId);
+          console.log(data2.genId);
+          console.log(data.genId);
           componentsArr.push(render('templates/schematics/switch.ejs', data));
-          const genId2 = () => `${prefix}${randomHex(2)}`.toUpperCase();
-          const data2 = Object.freeze({ genId2, key });
+          const data2 = Object.freeze({ genId, key });
           componentsArr.push(render('templates/schematics/diode.ejs', data2));
 
           // column connection

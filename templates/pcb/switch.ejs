@@ -1,8 +1,5 @@
-(module MX_Alps_Hybrid:MX-<%= data.key.size %>U-NoLED (layer F.Cu) (tedit 5A9F5203) (tstamp <%= data.id %>)
-  (at
-  <%= data.x %>
-  <%= data.y %>
-  <%= data.rotation ? ` ${90-data.rotation}` : `` %>)
+(module MX_Alps_Hybrid:MX-<%= data.key.size %>U-NoLED (layer F.Cu) (tedit 5A9F5203) (tstamp <%= data.randomTimestamp()  %>)
+  (at <%= data.x %> <%= data.y %> <%= data.rotation ? ` ${90-data.rotation}` : `` %>)
   (fp_text reference K_<%= data.key.name %> (at 0 3.175) (layer Dwgs.User)
     (effects (font (size 1 1) (thickness 0.15)))
   )

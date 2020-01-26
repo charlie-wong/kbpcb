@@ -33,13 +33,15 @@ class KiCad {
     [...Array(keyboard.cols+1)].forEach((_, i) => NetRepo.add(`/col${i}`));
     [...Array(keyboard.rows+1)].forEach((_, i) => NetRepo.add(`/row${i}`));
 
-    keyboard.forEach(k => {
-      const theSwitch = new Switch(k, this.leds);
-      const diode     = new Diode(k);
+    keyboard.forEach((k,i) => {
+      const key = {...k};
+      key.compositeName = `${k.name}_${i}`;
+      const theSwitch = new Switch(key, this.leds);
+      const diode     = new Diode(key);
       theSwitch.connectPads(2, diode, 2);
-      this.modules.push(theSwitch.render(k.x, k.y, k.rotation));
-      this.modules.push(diode.render(k.x - 0.5, k.y, 90));
-      this.components.push(theSwitch.renderSch(k))
+      this.modules.push(theSwitch.render(key.x, key.y, key.rotation));
+      this.modules.push(diode.render(key.x - 0.5, key.y, 90));
+      this.components.push(theSwitch.renderSch(key))
     });
 
     this.modules.push(new Frame(keyboard).render(this.gap));

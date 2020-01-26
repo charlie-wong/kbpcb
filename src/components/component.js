@@ -19,10 +19,10 @@ class Component {
     this.name = compName || `${prefix || type.charAt(0).toUpperCase()}${this.getNext()}`;
     this.pads = [];
     this.id = _genId();
+    this.timestampGenerator = _genId;
     this.netRepo = _netRepo;
     this.initX = Component.options.initX;
-    this.initY = Component.options.initY;
-
+    this.initY = Component.options.initY; 
     for (let index = 0; index < pads; index++) {
       this.addPad();
     }
@@ -66,10 +66,11 @@ class Component {
   }
 
   render(x, y, rotation) {
-    const { id, name } = this;
+    const { name } = this;
     const netForPad = this.netForPad.bind(this);
+    const randomTimestamp=this.timestampGenerator;
     const additionalData = this.getAdditionalData(x, y, rotation);
-    const data = { id, name, x, y, rotation, netForPad, ...additionalData };
+    const data = { randomTimestamp, name, x, y, rotation, netForPad, ...additionalData };
     data.x = data.x + Component.options.initX;
     data.y = data.y + Component.options.initY;
 
@@ -77,10 +78,11 @@ class Component {
   }
 
   renderSch(key) {
-    const { id, name } = this;
+    const { name } = this;
+    const randomTimestamp=this.timestampGenerator;
     const x = (this.initX * 100) + (key.col * 1000);
     const y = (this.initY * 100) + (key.row * 1000);
-    const data = { id, name, key, x, y };
+    const data = { randomTimestamp, name, key, x, y };
     return render(`templates/schematics/${this.type}.ejs`, { data });
   }
 }

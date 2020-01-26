@@ -3,7 +3,7 @@ const x = data.x;
 const y = data.y;
 %>$Comp
 L keyboard_parts:KEYSW <%= data.name %>
-U 1 1 <%= data.id %>
+U 1 1 <%= data.randomTimestamp() %>
 P <%= x %> <%= y %>
 F 0 "<%= data.name %>" H <%= x %> <%= y + 233 %> 60  0000 C CNN
 F 1 "KEYSW" H <%= x %> <%= y - 100 %> 60  0001 C CNN
@@ -14,9 +14,9 @@ F 3 "" H <%= x %> <%= y %> 60  0000 C CNN
 $EndComp
 $Comp
 L Device:D <%= data.name %>
-U 1 1 <%= data.id %>
+U 1 1 <%= data.randomTimestamp() %>
 P <%= x - 350 %> <%= y + 250 %>
-F 0 "D_<%= data.key.name %>" V <%= x - 304 %> <%= y + 250 - 79 %> 50  0000 R CNN
+F 0 "D_<%= data.key.compositeName %>" V <%= x - 304 %> <%= y + 250 - 79 %> 50  0000 R CNN
 F 1 "D" V <%= x - 405 %> <%= y + 250 - 79 %> 50  0000 R CNN
 F 2 "keyboard_parts:D_SOD123_axial" H <%= x - 350 %> <%= y + 250 %> 50  0001 C CNN
 F 3 "~" H <%= x - 350 %> <%= y + 250 %> 50  0001 C CNN

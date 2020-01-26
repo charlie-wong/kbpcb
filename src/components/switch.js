@@ -2,7 +2,7 @@ const Component = require('./component');
 
 class Switch extends Component {
   constructor(key, leds=false) {
-    super('switch', `K_${key.name}`, 4);
+    super('switch', `K_${key.compositeName}`, 4);
     this.key = key;
     this.leds = leds;
   }
