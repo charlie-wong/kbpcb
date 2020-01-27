@@ -3,17 +3,10 @@ const NetRepo  = require('./netRepo').instance;
 const Keyboard = require('./keyboard');
 const Component = require('./components/component');
 const Switch = require('./components/switch');
-const Cap = require('./components/cap');
 const Diode = require('./components/diode');
-const Resistor = require('./components/resistor');
 const Frame = require('./components/frame');
 const Plane = require('./components/plane');
-const Usb = require('./components/usb');
-const Reset = require('./components/reset');
-const Crystal = require('./components/crystal');
-const Micro = require('./components/micro');
 const ProMicro = require('./components/promicro')
-const Atmega32u4 = require('./components/atmega32u4')
 
 const render = require('./render');
 
@@ -32,10 +25,11 @@ class KiCad {
     NetRepo.clear();
     const keyboard = new Keyboard(this.layout);
 
-    [...Array(keyboard.cols+1)].forEach((_, i) => NetRepo.add(`/col${i}`));
-    [...Array(keyboard.rows+1)].forEach((_, i) => NetRepo.add(`/row${i}`));
+    [...Array(keyboard.cols+1)].forEach((_, i) => NetRepo.add(`col${i}`));
+    [...Array(keyboard.rows+1)].forEach((_, i) => NetRepo.add(`row${i}`));
 
     keyboard.forEach((k,i) => {
+      k.name = k.name.replace(/[,.':";`~\/?]+/,"_");
       const key = {...k};
       key.compositeName = `${k.name}_${i}`;
       const theSwitch = new Switch(key, this.leds);
@@ -46,7 +40,10 @@ class KiCad {
       this.components.push(theSwitch.renderSch(key))
     });
     const controller = new ProMicro();
-    this.components.push(controller.renderSch(keyboard));
+    controller.connectMatrixWithPinout(keyboard);
+    controller.getNet().forEach((name) => NetRepo.add(name));
+    this.components.push(controller.renderSch());
+   this.modules.push(controller.render(NetRepo));
 
     this.modules.push(new Frame(keyboard).render(this.gap));
     this.modules.push(new Plane(keyboard, 'GND', 'F.Cu').render(this.gap + 1));

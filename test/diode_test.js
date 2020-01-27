@@ -7,8 +7,8 @@ describe('Diode', () => {
   let diode;
 
   beforeEach(() => {
-    NetRepo.add('/col1');
-    NetRepo.add('/row1');
+    NetRepo.add('col1');
+    NetRepo.add('row1');
     const key = { name: 'X', row: 1, col: 1 };
     diode = new Diode(key);
     console.log('diode.name', diode.name);
@@ -26,7 +26,7 @@ describe('Diode', () => {
     });
 
     it('sets the pads', () => {
-      expect(str).to.contain('"/col1"');
+      expect(str).to.contain('"col1"');
       expect(str).to.contain('Net-(D_X-Pad2)');
     });
   });

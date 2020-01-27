@@ -3,7 +3,7 @@ const Component = require('./component');
 class Diode extends Component {
   constructor(key) {
     super('diode', `D_${key.compositeName}`, 2);
-    this.setPad(1, `/col${key.col}`);
+    this.setPad(1, `col${key.col}`);
   }
 
   getAdditionalData(x, y, options) {

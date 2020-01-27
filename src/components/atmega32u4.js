@@ -87,12 +87,12 @@ class Atmega32u4  {
 
     [...Array(this.keyboard.rows)].forEach((_, r) => {
       const pad = padMatrixOrder[0].pop();
-      micro.setPad(pad, `/row${r}`);
+      micro.setPad(pad, `row${r}`);
     });
 
     [...Array(this.keyboard.cols)].forEach((_, c) => {
       const pad = padMatrixOrder[1].pop();
-      micro.setPad(pad, `/col${c}`);
+      micro.setPad(pad, `col${c}`);
     });
 
     this.modules.push(r1.render(r1x, r1y));

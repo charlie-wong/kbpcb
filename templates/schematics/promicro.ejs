@@ -4,7 +4,7 @@ U 1 1 5E2E8144
 P 6200 10350
 F 0 "Controller1" H 6200 11387 60  0000 C CNN
 F 1 "ProMicro" H 6200 11281 60  0000 C CNN
-F 2 "" H 6300 9300 60  0000 C CNN
+F 2 "promicro:ProMicro" H 6300 9300 60  0001 C CNN
 F 3 "" H 6300 9300 60  0000 C CNN
         1    6200 10350
         1    0    0    -1  
@@ -73,13 +73,13 @@ Text GLabel 5500 10100 0    50   Input ~ 0
 Text GLabel 5500 10000 0    50   Input ~ 0
 <%= pins.d1 %>
 <% } %> 
-<% if(pins.rx){ %>
+<% if(pins.d2){ %>
 Text GLabel 5500 9700 0    50   Input ~ 0
-<%= pins.rx %>
+<%= pins.d2 %>
 <% } %> 
-<% if(pins.tx){ %>
+<% if(pins.d3){ %>
 Text GLabel 5500 9600 0    50   Input ~ 0
-<%= pins.tx %>
+<%= pins.d3 %>
 <% } %> 
 <% if(pins.vcc){ %>
 Text GLabel 6900 9900 0    50   Input ~ 0
