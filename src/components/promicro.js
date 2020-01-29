@@ -3,12 +3,12 @@ const render = require('../render');
 class ProMicro  {
   constructor() {
     this.availablePins = ['b6','b2','b3','b1','f7','f6','f5','f4','b5','b4','e6','d7','c6','d4','d0','d1','d2','d3']
-    this.unusedPins=['vcc','rst','gnd','gnd2','gnd3','raw']
+    this.specialPins=['vcc','rst','gnd','gnd2','gnd3','raw']
     this.nets = [];
     this.availablePins.forEach(item=>{
       this.nets[item]=`Net-(Controller1-${item})`;
     })  
-    this.unusedPins.forEach(item=>{
+    this.specialPins.forEach(item=>{
       this.nets[item]=`Net-(Controller1-${item})`;
     })  
     this.usedPins={}  
@@ -34,6 +34,20 @@ class ProMicro  {
     [...Array(keyboard.rows)].forEach((_, r) => {
       this.connectFreePinWithLabel(`row${r}`);
     });
+  }
+
+  addExternalConnection(internal,external,portsConfiguration){
+    if(portsConfiguration[external]){
+      this.nets[internal]=portsConfiguration[external];
+      this.usedPins[internal]=portsConfiguration[external];
+    }
+  }
+
+  addExternalConnector(portsConfiguration){
+    this.addExternalConnection("vcc","vcc",portsConfiguration);
+    this.addExternalConnection("gnd","gnd",portsConfiguration);
+    this.addExternalConnection("d2","rx",portsConfiguration);
+    this.addExternalConnection("d3","tx",portsConfiguration);
   }
 
   getNet(){

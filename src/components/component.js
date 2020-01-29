@@ -4,7 +4,7 @@ const NetRepo  = require('../netRepo').instance;
 const render = require('../render');
 const genId = () => `${prefix}${randomHex(2)}`.toUpperCase();
 
-const COMP_COUNTER = Symbol.for("MrKeebs.KbPCB.ComponentCounter");
+const COMP_COUNTER = Symbol.for("ComponentCounter");
 
 var globalSymbols = Object.getOwnPropertySymbols(global);
 var exists = (globalSymbols.indexOf(COMP_COUNTER) > -1);

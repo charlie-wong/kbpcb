@@ -32,6 +32,7 @@ app.post('/submit', (req, res) => {
       const name = fields.name || docName;
       const options = {
         leds: !!fields.leds,
+        splitted: !!fields.splitted,
         x: 20,
         y: 20,
       };

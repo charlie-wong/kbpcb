@@ -93,3 +93,7 @@ Text GLabel 6900 9800 0    50   Input ~ 0
 Text GLabel 6900 9600 0    50   Input ~ 0
 <%= pins.raw %>
 <% } %> 
+<% if(pins.gnd){ %>
+Text GLabel 6900 9700 0    50   Input ~ 0
+<%= pins.gnd %>
+<% } %> 
