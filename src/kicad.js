@@ -6,8 +6,9 @@ const Switch = require('./components/switch');
 const Diode = require('./components/diode');
 const Frame = require('./components/frame');
 const Plane = require('./components/plane');
-const ProMicro = require('./components/promicro')
-const ConnectorRp4c = require('./components/ConnectorRp4c')
+const ProMicro = require('./components/promicro');
+const Key  = require('./key');
+const ConnectorRp4c = require('./components/connectorRp4c')
 const render = require('./render');
 
 class KiCad {
@@ -18,6 +19,10 @@ class KiCad {
     this.gap = options.gap || 3;
     this.leds = options.leds;
     this.splitted = options.splitted;
+    this.height = Key.convertMetricToKeyboardUnit(options.height);
+    this.width = Key.convertMetricToKeyboardUnit(options.width);
+    this.elementPlacement = options.elementPlacement;
+
     Component.options.initX = options.x || 0;
     Component.options.initY = options.y || 0;
   }
@@ -55,9 +60,11 @@ class KiCad {
     this.schematic.push(controller.renderSch());
     this.pcb.push(controller.render(NetRepo));
 
-    this.pcb.push(new Frame(keyboard).render(this.gap));
-    this.pcb.push(new Plane(keyboard, 'GND', 'F.Cu').render(this.gap + 1));
-    this.pcb.push(new Plane(keyboard, 'VCC', 'B.Cu').render(this.gap + 1));
+    let dimension = this.getKeyboardDimension(keyboard);
+
+    this.pcb.push(new Frame(dimension).render(this.gap));
+ //   this.pcb.push(new Plane(keyboard, 'GND', 'F.Cu').render(this.gap + 1));
+ //   this.pcb.push(new Plane(keyboard, 'VCC', 'B.Cu').render(this.gap + 1));
 
     //fixme
     // const atmega32u4 = new Atmega32u4(this.modules,keyboard,this.gap);
@@ -70,6 +77,13 @@ class KiCad {
       render('templates/matrix.ejs', { components, nets }),
       render('templates/pcb.ejs', { modules, nets }),
     ];
+  }
+
+  getKeyboardDimension(keyboard) {
+    let dimension ={};
+    dimension.width = this.width || keyboard.width;
+    dimension.height = this.height || keyboard.height;
+    return dimension;
   }
 }
 

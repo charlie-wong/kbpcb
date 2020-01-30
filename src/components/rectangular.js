@@ -1,12 +1,12 @@
 const Component = require('./component');
 
 class Rectangular extends Component {
-  constructor(kb, type, name) {
+  constructor(dimension, type, name) {
     super(type, name);
     this.x = 0;
     this.y = 0;
-    this.x1 = (kb.width * 1905)/100;
-    this.y1 = (kb.height * 1905)/100;
+    this.x1 = (dimension.width * 1905)/100;
+    this.y1 = (dimension.height * 1905)/100;
   }
 
   getAdditionalData() {

@@ -13,5 +13,11 @@ class Key {
     this.col = col;
   }
 }
-
+Key.metric1uSize = 1905
+Key.convertMetricToKeyboardUnit = size => {
+  if (size){
+    return parseFloat(size * 100 / Key.metric1uSize).toPrecision(4);
+  }
+  return size;
+}
 module.exports = Key;

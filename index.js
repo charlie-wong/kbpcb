@@ -33,6 +33,10 @@ app.post('/submit', (req, res) => {
       const options = {
         leds: !!fields.leds,
         splitted: !!fields.splitted,
+        connector: fields.connector,
+        height:fields.height,
+        width: fields.width,
+        elementPlacement: fields.elementPlacement,
         x: 20,
         y: 20,
       };
