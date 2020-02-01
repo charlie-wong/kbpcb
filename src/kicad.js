@@ -9,6 +9,7 @@ const Plane = require('./components/plane');
 const ProMicro = require('./components/promicro');
 const Key  = require('./key');
 const ConnectorRp4c = require('./components/connectorRp4c')
+const ConnectorUSB_A = require('./components/connectorUSB_A')
 const render = require('./render');
 
 class KiCad {
@@ -18,7 +19,8 @@ class KiCad {
     this.schematic = [];
     this.gap = options.gap || 3;
     this.leds = options.leds;
-    this.splitted = options.splitted;
+    this.splitted = options.splitted_rj11 || options.splitted_usb_a;
+    this.splitConnector = options.splitted_rj11 ? "rh11" : options.splitted_usb_a ? "usb-a" : "none";
     this.height = Key.convertMetricToKeyboardUnit(options.height);
     this.width = Key.convertMetricToKeyboardUnit(options.width);
     this.elementPlacement = options.elementPlacement;
@@ -49,7 +51,12 @@ class KiCad {
     controller.connectMatrixWithPinout(keyboard);
 
     if (this.splitted) {
-      const connector = new ConnectorRp4c();
+      let connector;
+    if(this.splitConnector == "usb-a"){
+      connector = new ConnectorUSB_A();
+    } else{
+       connector = new ConnectorRp4c();
+    }
       controller.addExternalConnector(connector.getPinOutConfiguration())
       connector.getNet().forEach((name) => NetRepo.add(name));
       this.pcb.push(connector.render(NetRepo))
