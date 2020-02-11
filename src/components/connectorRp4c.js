@@ -4,9 +4,9 @@ class ConnectorRp4c {
    getPinOutConfiguration() {
      return {
        "vcc":"VCC",
-       "gnd":"GND",
        "rx":"RX",
-       "tx":"TX"
+       "tx":"TX",
+       "gnd":"GND"
      }
   }
 

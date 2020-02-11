@@ -7,10 +7,11 @@ const Diode = require('./components/diode');
 const Frame = require('./components/frame');
 const Plane = require('./components/plane');
 const ProMicro = require('./components/promicro');
-const Key  = require('./key');
+const Key = require('./key');
 const ConnectorRp4c = require('./components/connectorRp4c')
 const ConnectorUSB_A = require('./components/connectorUSB_A')
 const render = require('./render');
+const DummyMicroController = require('./components/dummyMicroController')
 
 class KiCad {
   constructor(layout, options = {}) {
@@ -19,6 +20,7 @@ class KiCad {
     this.schematic = [];
     this.gap = options.gap || 3;
     this.leds = options.leds;
+    this.microControllerType = options.microControllerType;
     this.splitted = options.splitted_rj11 || options.splitted_usb_a;
     this.splitConnector = options.splitted_rj11 ? "rh11" : options.splitted_usb_a ? "usb-a" : "none";
     this.height = Key.convertMetricToKeyboardUnit(options.height);
@@ -47,22 +49,27 @@ class KiCad {
       this.pcb.push(diode.render(key.x - 0.5, key.y, 90));
       this.schematic.push(theSwitch.renderSch(key))
     });
-    const controller = new ProMicro();
-    controller.connectMatrixWithPinout(keyboard);
+    let controller
+    if (this.microControllerType == "promicro") {
+      controller = new ProMicro();
+    } else {
+      controller = new DummyMicroController();
+    }
 
+    controller.connectMatrixWithPinout(keyboard);
     if (this.splitted) {
       let connector;
-    if(this.splitConnector == "usb-a"){
-      connector = new ConnectorUSB_A();
-    } else{
-       connector = new ConnectorRp4c();
-    }
+      if (this.splitConnector == "usb-a") {
+        connector = new ConnectorUSB_A();
+      } else {
+        connector = new ConnectorRp4c();
+      }
       controller.addExternalConnector(connector.getPinOutConfiguration())
       connector.getNet().forEach((name) => NetRepo.add(name));
       this.pcb.push(connector.render(NetRepo))
       this.schematic.push(connector.renderSch());
     }
-    
+
     controller.getNet().forEach((name) => NetRepo.add(name));
     this.schematic.push(controller.renderSch());
     this.pcb.push(controller.render(NetRepo));
@@ -70,8 +77,8 @@ class KiCad {
     let dimension = this.getKeyboardDimension(keyboard);
 
     this.pcb.push(new Frame(dimension).render(this.gap));
- //   this.pcb.push(new Plane(keyboard, 'GND', 'F.Cu').render(this.gap + 1));
- //   this.pcb.push(new Plane(keyboard, 'VCC', 'B.Cu').render(this.gap + 1));
+    //   this.pcb.push(new Plane(keyboard, 'GND', 'F.Cu').render(this.gap + 1));
+    //   this.pcb.push(new Plane(keyboard, 'VCC', 'B.Cu').render(this.gap + 1));
 
     //fixme
     // const atmega32u4 = new Atmega32u4(this.modules,keyboard,this.gap);
@@ -87,7 +94,7 @@ class KiCad {
   }
 
   getKeyboardDimension(keyboard) {
-    let dimension ={};
+    let dimension = {};
     dimension.width = this.width || keyboard.width;
     dimension.height = this.height || keyboard.height;
     return dimension;

@@ -1,0 +1,15 @@
+$Comp
+L Connector_Generic:Conn_01x<%= ('0'+data.size).slice(-2) %> J<%= data.id %>
+U 1 1 <%= data.randomTimestamp %> 
+P <%= data.startPosition %>900 <%= 8000+Math.floor(data.size/2)*100-100 %> 
+F 0 "J<%= data.id %>" H <%= data.startPosition %>980 8492 50  0000 L CNN
+F 1 "Conn_01x<%= data.size %>" H <%= data.startPosition %>980  <%= 8000+Math.floor(data.size/2)*100-199 %> 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x<%= ('0'+data.size).slice(-2) %>_P2.54mm_Vertical" H <%= data.startPosition %>900 <%= 8000+Math.floor(data.size/2)*100-100 %> 50  0001 C CNN
+F 3 "~" H <%= data.startPosition %>900 <%= 8000+Math.floor(data.size/2)*100-100 %> 50  0001 C CNN
+	1    <%= data.startPosition %>900 <%= 8000+Math.floor(data.size/2)*100-100 %>
+	1    0    0    -1  
+$EndComp
+<% for(var i=0; i < data.size; i++) { %>
+Text GLabel <%= data.startPosition %>700 <%= 8000+i*100 %> 0    50   Input ~ 0
+<%= data.getLabel(i) %>
+<% } %>

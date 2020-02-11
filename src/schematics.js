@@ -24,8 +24,6 @@ class Schematics {
   }
 
   generateComponents() {
-    const prefix = randomHex(2);
-
     let x = X_INIT;
     let y = Y_INIT;
     let n = 0;
@@ -38,7 +36,7 @@ class Schematics {
         if (typeof k === 'object') {
           size = k.w || 1;
         } else {
-          const genId = () => `${prefix}${randomHex(2)}`.toUpperCase();
+          const genId = () => `${randomHex(8)}`.toUpperCase();
 
           const name = getName(k);
           const key = Object.freeze({ name, x, y, size });

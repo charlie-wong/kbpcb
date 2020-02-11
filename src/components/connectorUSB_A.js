@@ -2,12 +2,12 @@ const render = require('../render');
 
 class ConnectorUSB_A {
    getPinOutConfiguration() {
-     return {
-       "vcc":"VCC",
-       "gnd":"GND",
-       "rx":"RX",
-       "tx":"TX"
-     }
+    return {
+      "vcc":"VCC",
+      "rx":"RX",
+      "tx":"TX",
+      "gnd":"GND"
+    }
   }
 
   getNet(){

@@ -35,6 +35,7 @@ app.post('/submit', (req, res) => {
         splitted_rj11: !!fields.splitted_rj11,
         splitted_usb_a: !!fields.splitted_usb_a,
         connector: fields.connector,
+        microControllerType: !!fields.noMicroController ? "none" : "promicro",
         height:fields.height,
         width: fields.width,
         elementPlacement: fields.elementPlacement,

@@ -2,7 +2,7 @@ const randomHex = require('random-hex-string').sync;
 
 const NetRepo  = require('../netRepo').instance;
 const render = require('../render');
-const genId = () => `${prefix}${randomHex(2)}`.toUpperCase();
+const genId = () => `${randomHex(8)}`.toUpperCase();
 
 const COMP_COUNTER = Symbol.for("ComponentCounter");
 
