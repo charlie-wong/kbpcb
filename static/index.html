@@ -19,9 +19,9 @@
           PCB Generator
         </h1>
         <p class="subtitle">
-          Create KiCad PCB files from KLE json files
+          Create KiCad PCB files from KLE json files</br>
         </p>
-
+          
         <form action="/submit" enctype="multipart/form-data" method="POST">
 
           <div class="file is-boxed">
@@ -37,7 +37,12 @@
               </span>
             </label>
           </div>
-
+          <p class="subtitle">
+            By default it will use promicro as controller. Support for raw atmega32u4 was removed. </br>
+            After importing generated project to KiCad please check it by kicad validation tool </br>
+             and synchronize schematic with PCB. Some of schematic elements are not included by default on PCB.
+             For generating routing for switches you may try freerouter tool. 
+          </p>
           <div class="field">
             <div class="control">
               <label class="checkbox">
